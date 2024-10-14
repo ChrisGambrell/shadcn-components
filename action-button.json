@@ -1,9 +1,8 @@
 {
-  "name": "shadcn-components",
+  "name": "action-button",
   "type": "registry:block",
   "dependencies": [
-    "@radix-ui/react-slot",
-    "react-hot-toast"
+    "@radix-ui/react-slot"
   ],
   "devDependencies": [],
   "registryDependencies": [
@@ -11,25 +10,9 @@
   ],
   "files": [
     {
-      "path": "./components/action-button.json",
-      "content": "",
-      "type": "registry:block"
-    },
-    {
       "path": "./components/action-button.tsx",
       "content": "'use client'\n\nimport { Loader2Icon } from 'lucide-react'\nimport { useFormStatus } from 'react-dom'\nimport { cn } from '../lib/utils'\nimport { Button, ButtonProps } from './ui/button'\n\nexport function ActionButton({ children, className, disabled, ...props }: ButtonProps) {\n\tconst { pending } = useFormStatus()\n\n\treturn (\n\t\t<Button className={cn('relative', className)} disabled={disabled || pending} type='submit' {...props}>\n\t\t\t<span className={cn('flex items-center', { invisible: pending })}>{children}</span>\n\t\t\t{pending && (\n\t\t\t\t<div className='absolute m-auto'>\n\t\t\t\t\t<Loader2Icon className='size-5 animate-spin' />\n\t\t\t\t</div>\n\t\t\t)}\n\t\t</Button>\n\t)\n}\n",
       "type": "registry:block"
-    },
-    {
-      "path": "./components/global-toaster.tsx",
-      "content": "'use client'\n\nimport { usePathname, useRouter, useSearchParams } from 'next/navigation'\nimport { useEffect } from 'react'\nimport toast, { Toaster } from 'react-hot-toast'\n\nexport function GlobalToaster() {\n\tconst pathname = usePathname()\n\tconst router = useRouter()\n\tconst searchParams = useSearchParams()\n\n\tuseEffect(() => {\n\t\tconst message = searchParams.get('message')\n\t\tconst error = searchParams.get('error')\n\t\tconst success = searchParams.get('success')\n\n\t\tif (!message && !error && !success) return\n\t\tconst toastType = message ? toast : success ? toast.success : toast.error\n\t\ttoastType(message ? message : success ? success : error)\n\n\t\tconst newSearchParams = new URLSearchParams(searchParams.toString())\n\t\tconst paramsToRemove = ['message', 'error', 'success']\n\t\tparamsToRemove.forEach((param) => newSearchParams.delete(param))\n\t\tconst redirectPath = `${pathname}?${newSearchParams.toString()}`\n\t\trouter.replace(redirectPath, { scroll: false })\n\t}, [searchParams])\n\n\treturn <Toaster />\n}\n",
-      "type": "registry:block"
-    },
-    {
-      "path": "./global-toaster.json",
-      "content": "{\n  \"name\": \"shadcn-components\",\n  \"type\": \"registry:block\",\n  \"dependencies\": [\n    \"react-hot-toast\"\n  ],\n  \"devDependencies\": [],\n  \"registryDependencies\": [],\n  \"files\": [\n    {\n      \"path\": \"./components/global-toaster.tsx\",\n      \"content\": \"'use client'\\n\\nimport { usePathname, useRouter, useSearchParams } from 'next/navigation'\\nimport { useEffect } from 'react'\\nimport toast, { Toaster } from 'react-hot-toast'\\n\\nexport function GlobalToaster() {\\n\\tconst pathname = usePathname()\\n\\tconst router = useRouter()\\n\\tconst searchParams = useSearchParams()\\n\\n\\tuseEffect(() => {\\n\\t\\tconst message = searchParams.get('message')\\n\\t\\tconst error = searchParams.get('error')\\n\\t\\tconst success = searchParams.get('success')\\n\\n\\t\\tif (!message && !error && !success) return\\n\\t\\tconst toastType = message ? toast : success ? toast.success : toast.error\\n\\t\\ttoastType(message ? message : success ? success : error)\\n\\n\\t\\tconst newSearchParams = new URLSearchParams(searchParams.toString())\\n\\t\\tconst paramsToRemove = ['message', 'error', 'success']\\n\\t\\tparamsToRemove.forEach((param) => newSearchParams.delete(param))\\n\\t\\tconst redirectPath = `${pathname}?${newSearchParams.toString()}`\\n\\t\\trouter.replace(redirectPath, { scroll: false })\\n\\t}, [searchParams])\\n\\n\\treturn <Toaster />\\n}\\n\",\n      \"type\": \"registry:block\"\n    },\n    {\n      \"path\": \"./global-toaster.json\",\n      \"content\": \"\",\n      \"type\": \"registry:example\",\n      \"target\": \"~/global-toaster.json\"\n    }\n  ],\n  \"tailwind\": {},\n  \"cssVars\": {},\n  \"meta\": {}\n}\n",
-      "type": "registry:example",
-      "target": "~/global-toaster.json"
     }
   ],
   "tailwind": {},
